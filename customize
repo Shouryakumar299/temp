@@ -1,0 +1,54 @@
+# --- WINDOW GAPS & BORDERS ---
+# Removes the bulky default window titlebars
+default_border pixel 2
+default_floating_border pixel 2
+
+# Inner gaps (space between windows) & Outer gaps (space around screen edges)
+gaps inner 12
+gaps outer 8
+
+# Only show borders if there's more than 1 window
+smart_borders on
+
+# --- MOUSE CONTROLS ---
+# Hold $mod (Windows Key) + Left Click to drag floating windows
+# Hold $mod + Right Click to resize floating windows
+floating_modifier $mod
+
+# Middle-click on window border to close it
+bindsym --release button2 kill
+
+# --- KEYBINDINGS & WINDOW CONTROLS ---
+# Toggle floating mode ($mod + Shift + Space)
+bindsym $mod+Shift+space floating_toggle
+
+# Toggle Fullscreen ($mod + f)
+bindsym $mod+f fullscreen toggle
+
+# Close active window ($mod + Shift + q)
+bindsym $mod+Shift+q kill
+
+# Minimize to Scratchpad ($mod + Shift + -)
+bindsym $mod+Shift+minus move scratchpad
+
+# Restore from Scratchpad ($mod + -)
+bindsym $mod+minus scratchpad show
+
+# --- DEFAULT FLOATING RULES FOR SPECIFIC APPS ---
+# Make Alacritty/terminal open centered as floating by default (optional)
+for_window [class="Alacritty"] floating enable, resize set 900 600, move position center
+
+
+# Theme colors (Rosé Pine / Slate)
+set $bg-color            #191724
+set $inactive-bg-color   #1f1d2e
+set $text-color          #e0def4
+set $inactive-text-color #6e6a86
+set $urgent-bg-color     #eb6f92
+set $focus-color          #ebbcba
+
+# window class          border             background         text                  indicator
+client.focused          $focus-color       $focus-color       $text-color           $focus-color
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
+client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color           $urgent-bg-color
