@@ -1,54 +1,47 @@
+# --- MODIFIER & FONTS ---
+set $mod Mod4
+font pango:Roboto Mono 9
+
 # --- WINDOW GAPS & BORDERS ---
-# Removes the bulky default window titlebars
 default_border pixel 2
 default_floating_border pixel 2
-
-# Inner gaps (space between windows) & Outer gaps (space around screen edges)
 gaps inner 12
 gaps outer 8
-
-# Only show borders if there's more than 1 window
 smart_borders on
 
 # --- MOUSE CONTROLS ---
-# Hold $mod (Windows Key) + Left Click to drag floating windows
-# Hold $mod + Right Click to resize floating windows
+# Hold Super + Left Click to drag, Right Click to resize
 floating_modifier $mod
-
-# Middle-click on window border to close it
+# Middle-click titlebar/border to close window
 bindsym --release button2 kill
 
 # --- KEYBINDINGS & WINDOW CONTROLS ---
-# Toggle floating mode ($mod + Shift + Space)
+bindsym $mod+Return exec alacritty
+bindsym $mod+Shift+q kill
+bindsym $mod+d exec --no-startup-id rofi -show drun
 bindsym $mod+Shift+space floating_toggle
-
-# Toggle Fullscreen ($mod + f)
 bindsym $mod+f fullscreen toggle
 
-# Close active window ($mod + Shift + q)
-bindsym $mod+Shift+q kill
-
-# Minimize to Scratchpad ($mod + Shift + -)
+# Minimize / Restore (Scratchpad)
 bindsym $mod+Shift+minus move scratchpad
-
-# Restore from Scratchpad ($mod + -)
 bindsym $mod+minus scratchpad show
 
-# --- DEFAULT FLOATING RULES FOR SPECIFIC APPS ---
-# Make Alacritty/terminal open centered as floating by default (optional)
-for_window [class="Alacritty"] floating enable, resize set 900 600, move position center
+# Launch File Manager (Ranger)
+bindsym $mod+r exec --no-startup-id alacritty -e ranger
 
+# --- MANHATTAN / DARK BLUE COLOR SCHEME ---
+set $bg           #1a1b26
+set $surface      #24283b
+set $text         #a9b1d6
+set $accent       #7aa2f7
+set $inactive     #414868
 
-# Theme colors (Rosé Pine / Slate)
-set $bg-color            #191724
-set $inactive-bg-color   #1f1d2e
-set $text-color          #e0def4
-set $inactive-text-color #6e6a86
-set $urgent-bg-color     #eb6f92
-set $focus-color          #ebbcba
+# Class                  Border    Backgrd   Text     Indicator Child Border
+client.focused           $accent   $accent   $bg      $accent   $accent
+client.unfocused         $inactive $surface  $text    $inactive $inactive
+client.focused_inactive $inactive $surface  $text    $inactive $inactive
+client.urgent            #f7768e   #f7768e   $bg      #f7768e   #f7768e
 
-# window class          border             background         text                  indicator
-client.focused          $focus-color       $focus-color       $text-color           $focus-color
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
-client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color           $urgent-bg-color
+# --- AUTOSTART ---
+exec_always --no-startup-id xcompmgr -c -C -t-5 -l-5 -r-42 -o.38
+exec_always --no-startup-id ~/.config/polybar/launch.sh
