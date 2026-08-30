@@ -343,3 +343,27 @@ interval = 2
 label = "RAM: %gb_used%"
 format-background = ${colors.pill-bg}
 format-padding = 2
+
+
+
+-------------
+
+
+#!/bin/sh
+
+# Take a screenshot and blur it for the background
+import -window root /tmp/screenshot.png
+convert /tmp/screenshot.png -blur 0x8 /tmp/lockscreen.png
+
+# Lock the screen with custom dark styling
+i3lock -i /tmp/lockscreen.png \
+  --insidecolor=282a36cc --ringcolor=6272a4ff \
+  --line-color=00000000 --keyhlcolor=50fa7bff \
+  --bshlcolor=ff5555ff --insidevercolor=8be9fdcc \
+  --ringvercolor=8be9fdff --insidewrongcolor=ff5555cc \
+  --ringwrongcolor=ff5555ff --veriftext="" --wrongtext="" \
+  --noinputtext="" --clock --indicator
+
+# Clean up the temporary image file
+rm /tmp/screenshot.png /tmp/lockscreen.png
+
