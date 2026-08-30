@@ -211,3 +211,135 @@ interval = 2
 label = "%{T2}&#xf538;%{T-} %gb_used%"
 format-background = ${colors.pill-bg}
 format-padding = 2
+
+
+--------
+
+
+
+[colors]
+# Completely transparent bar background
+background = #00000000
+foreground = #e0def4
+
+# Pure black solid background for the pill modules
+pill-bg    = #000000
+accent     = #7aa2f7
+inactive   = #555555
+
+[bar/bottom]
+# Position the bar at the bottom of the screen
+bottom = true
+width = 100%
+height = 30
+radius = 0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 0
+padding-left = 1
+padding-right = 1
+module-margin = 1
+
+font-0 = "Roboto Mono:style=Bold:size=9;2"
+
+modules-left = xworkspaces xwindow
+modules-center = date
+modules-right = storage uptime temp battery memory
+
+# ============================================
+# LEFT MODULES
+# ============================================
+[module/xworkspaces]
+type = internal/xworkspaces
+
+pin-workspaces = true
+enable-click = true
+enable-scroll = true
+
+format = <label-state>
+format-background = ${colors.pill-bg}
+format-padding = 1
+
+label-focused = "%name%"
+label-focused-foreground = ${colors.accent}
+label-focused-background = ${colors.pill-bg}
+label-focused-padding = 2
+
+label-occupied = "%name%"
+label-occupied-foreground = ${colors.foreground}
+label-occupied-background = ${colors.pill-bg}
+label-occupied-padding = 2
+
+label-empty = "%name%"
+label-empty-foreground = ${colors.inactive}
+label-empty-background = ${colors.pill-bg}
+label-empty-padding = 2
+
+[module/xwindow]
+type = internal/xwindow
+
+label = "WIN: %title:0:20:...%"
+label-empty = "Desktop"
+
+format-background = ${colors.pill-bg}
+format-foreground = ${colors.foreground}
+format-padding = 2
+
+# ============================================
+# CENTER MODULES
+# ============================================
+[module/date]
+type = internal/date
+interval = 1.0
+date = "%a %d %b %H:%M"
+format-prefix = "TIME: "
+format-prefix-foreground = ${colors.accent}
+format-background = ${colors.pill-bg}
+format-padding = 2
+
+# ============================================
+# RIGHT MODULES
+# ============================================
+[module/storage]
+type = internal/fs
+mount-0 = /
+label-mounted = "DISK: %free%"
+format-mounted-background = ${colors.pill-bg}
+format-mounted-padding = 2
+
+[module/uptime]
+type = custom/script
+exec = awk '{print int($1/3600)"h "int(($1%3600)/60)"m"}' /proc/uptime
+interval = 60
+format-prefix = "UP: "
+format-prefix-foreground = ${colors.accent}
+format-background = ${colors.pill-bg}
+format-padding = 2
+
+[module/temp]
+type = internal/temperature
+thermal-zone = 0
+label = "CPU: %temperature-c%"
+format-background = ${colors.pill-bg}
+format-padding = 2
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = ADP1
+full-at = 98
+label-charging = "BAT: %percentage%% [CHG]"
+label-discharging = "BAT: %percentage%%"
+format-charging-background = ${colors.pill-bg}
+format-charging-padding = 2
+format-discharging-background = ${colors.pill-bg}
+format-discharging-padding = 2
+
+[module/memory]
+type = internal/memory
+interval = 2
+label = "RAM: %gb_used%"
+format-background = ${colors.pill-bg}
+format-padding = 2
